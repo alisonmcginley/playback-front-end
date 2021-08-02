@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 
 import Controls from './components/Controls';
+import Instruments from './components/Instruments';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         </header>
         <main>
           <Controls />
+          <Instruments />
         </main>
     </div>
   );
