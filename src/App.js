@@ -10,20 +10,7 @@ function App() {
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
-    // generateNotes()
   }
-  // const generateNotes = ({selectedInstrument}) => {
-  //   let currentId = 0
-  //   const notes = {selectedInstrument: []}
-    
-  //   for (let i = 0; i < 10; i ++){
-  //     notes.selectedInstrument.push({
-  //       id: currentId
-  //     });
-  //     currentId++;
-  //   };
-  //   return notes
-  // };
 
 // generate grid for visual display
   return (
