@@ -5,9 +5,6 @@ import Controls from './components/Controls';
 import Instrument from './components/Instrument';
 
 
-
-
-
 function App() {
   const [selectedInstrument, setInstrument] = useState('drums')
   const updateInstrument = (form) => {
@@ -37,9 +34,9 @@ function App() {
 
         <main>
           <Controls />
-          <Instrument instrument={updateInstrument} />
+          <Instrument instrument={selectedInstrument} />
           <div className="instrumentRadios">
-            <input checked name = "instrumentChoice" type="radio" value="drums" id="drums" onChange={updateInstrument}></input>
+            <input name = "instrumentChoice" type="radio" value="drums" id="drums" onChange={updateInstrument}></input>
             <label for="drums">Drums</label>            
             <input name = "instrumentChoice" type="radio" value="bass" id="bass" onChange={updateInstrument}></input>
             <label for="bass">Bass</label>            

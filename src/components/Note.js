@@ -9,6 +9,5 @@ Note.propTypes = {
     id: PropTypes.number.isRequired,
     instrument: PropTypes.string.isRequired
 };
-
-
+// write api call based on Note.instrument
 export default Note

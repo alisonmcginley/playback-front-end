@@ -18,6 +18,7 @@ const setNotes = (instrument) => {
     return (
         <Note instrument={instrument} id={note.id} />
     )
+
 });
     return (
         <div class="notes">
