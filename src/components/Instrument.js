@@ -3,17 +3,36 @@ import PropTypes from 'prop-types';
 import Note from './Note'
 // instruments should be a selector component that edits state
 // pass down instrument selection to notes component
-const setNotes = (notes) => {
+const setNotes = (instrument) => {
+    let currentId = 0
+    const notes = {instrument: []}
+    
+    for (let i = 0; i < 10; i ++){
+      notes.instrument.push({
+        id: currentId
+      });
+      currentId++;
+    };
+
+    const noteComponents = notes.instrument.map(note => {
     return (
-        <Note />
+        <Note instrument={instrument} id={note.id} />
     )
-}
-const Instrument = (notes) => {
-    setNotes(notes);
+});
+    return (
+        <div class="notes">
+           {noteComponents} 
+        </div>
+    )
+
+};
+const Instrument = ({instrument}) => {
+    return setNotes(instrument)
+
 };
 
 Instrument.propTypes = {
-    notes: PropTypes.string.isRequired
+    instrument: PropTypes.string.isRequired
 }
 
 export default Instrument

@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Note = (props) => {
-    return 
-    <button 
-    id = {props.id} className ="note">Note</button>
-    
-}
+    return <button instrument = {props.instrument} id = {props.id} className ="note">Note</button>   
+};
+
+Note.propTypes = {
+    id: PropTypes.number.isRequired,
+    instrument: PropTypes.string.isRequired
+};
+
 
 export default Note
