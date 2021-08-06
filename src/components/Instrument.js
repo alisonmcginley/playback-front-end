@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Note from './Note'
+import Note from './Note';
+import axios from 'axios';
+
 // instruments should be a selector component that edits state
 // pass down instrument selection to notes component
 const setNotes = (instrument) => {

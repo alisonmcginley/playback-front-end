@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import axios from 'axios'
 
 import Controls from './components/Controls';
 import Instrument from './components/Instrument';
@@ -12,6 +13,17 @@ function App() {
     setInstrument(currInstrument);
   }
 
+  const BASE_URL = 'http://localhost:27017/instruments'
+  useEffect(() => {
+    axios.get(`${BASE_URL}`, {
+      params: {
+        name: `${selectedInstrument}`
+      }
+    })
+      .then((response) => {
+        <Instrument instrument={selectedInstrument} />
+      })
+  })
 // generate grid for visual display
   return (
     <div className="App">
@@ -21,8 +33,9 @@ function App() {
 
         <main>
           <Controls />
-          <Instrument instrument={selectedInstrument} />
+
           <div className="instrumentRadios">
+          <h3 id="instrumentHeader">Choose an Instrument</h3>
             <input name = "instrumentChoice" type="radio" value="drums" id="drums" onChange={updateInstrument}></input>
             <label for="drums">Drums</label>            
             <input name = "instrumentChoice" type="radio" value="bass" id="bass" onChange={updateInstrument}></input>

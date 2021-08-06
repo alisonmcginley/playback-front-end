@@ -5,7 +5,7 @@ import React from 'react';
 // }
 const Clear = () => {
     return (
-        <button id="clear">Clear</button>
+        <button className="controls">Clear</button>
     )
 }
 

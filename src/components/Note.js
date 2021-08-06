@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './note.css';
+
 
 const Note = (props) => {
     return <button instrument = {props.instrument} id = {props.id} className ="note">Note</button>   
