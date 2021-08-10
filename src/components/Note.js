@@ -4,7 +4,7 @@ import './note.css';
 
 
 const Note = (props) => {
-    return <span onKeyDown ={props.playNote} key = {props.id} AUDIO_URI = {props.AUDIO_URI} className ="note">Note</span>   
+    return <span onKeyDown ={props.playNote} key = {props.id} keyEvent= {props.keyEvent} className ="note">Note</span>   
 };
 
 Note.propTypes = {

@@ -5,27 +5,12 @@ import axios from 'axios';
 
 // instruments should be a selector component that edits state
 // pass down instrument selection to notes component
-const keyAssignments =[
-    {"q": ""},    
-    {"w": ""},
-    {"e": ""},
-    {"r": ""},
-    {"t": ""},
-    {"y": ""},
-    {"u": ""},
-    {"i": ""},
-    {"o": ""},
-    {"p": ""}
-  ]
 
-const setNotes = (instrument, playNote) => {
-    for(let i =0; i< instrument.length; i++){
-        keyAssignments[i] = instrument[i]["AUDIO_URI"]
-    }
-    console.log(keyAssignments)
-    const noteComponents = instrument.map(note => {
+
+const setNotes = (keyAssignments, playNote) => {
+    const noteComponents = keyAssignments.map(note => {
     return (
-        <Note id={note.AUDIO_URI} key = {note._id} keyCallBack = {playNote}/>
+        <Note keyEvent={note} key = {note._id} keyCallBack = {playNote}/>
     )
 
 });
@@ -36,8 +21,8 @@ const setNotes = (instrument, playNote) => {
     )
 
 };
-const Instrument = ({ instrument, playNote}) => {
-    const noteList = setNotes(instrument, playNote);
+const Instrument = ({ keyAssignments, playNote}) => {
+    const noteList = setNotes(keyAssignments, playNote);
     console.log(noteList)
     return <div>
         {noteList}
@@ -46,9 +31,7 @@ const Instrument = ({ instrument, playNote}) => {
 };
 
 Instrument.propTypes = {
-    instrument: PropTypes.arrayOf(PropTypes.shape({
-        _id: PropTypes.string,
-        index: PropTypes.number,
+    keyAssignments: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string,
         AUDIO_URI: PropTypes.string
     })),
