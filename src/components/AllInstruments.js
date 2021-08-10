@@ -4,12 +4,18 @@ import Instrument from "./Instrument"
 
 const generateInstruments = (instrumentData) => {
     const instrumentComponents = instrumentData.map(instrument => {
-        return <Instrument instrument = {instrumentData.audioSamples} playNote = {instrumentData.playNote} />
+        console.log(instrument.audioSamples)
+        return <Instrument instrument = {instrument.audioSamples} />
     })
-    console.log(instrumentData)
+    return (
+        <div class="instrumentComponents">
+            {instrumentComponents}
+        </div>
+    )
 }
 const AllInstruments = ({instrumentData}) => {
     const instrumentList = generateInstruments(instrumentData);
+    console.log(instrumentList)
     return <div>
         {instrumentList}
     </div>

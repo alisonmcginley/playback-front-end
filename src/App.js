@@ -5,7 +5,6 @@ import axios from 'axios'
 import Controls from './components/Controls';
 import Instrument from './components/Instrument';
 import AllInstruments from './components/AllInstruments'
-import { render } from '@testing-library/react';
 
 
 function App() {
@@ -17,17 +16,15 @@ function App() {
     setInstrument(currInstrument);
   }
 
-  const [instruments, setInstruments] = useState()
-
+  const [instruments, setInstruments] = useState([])
+// needs dependency array
   useEffect(() => {
-    if (!instruments){
       axios.get(`${BASE_URL}`)
       .then((response) => {
         setInstruments(response.data)
       })
-    }
-  })
-// generate grid for visual display
+  }, [])
+
   return (
     <div className="App">
         <header id="header">
@@ -38,7 +35,6 @@ function App() {
           <Controls />
           <AllInstruments instrumentData={instruments} />
 
-{/* render AI here */}
         
 {/* instance of instruments passes down selected instrument array samples */}
           <div className="instrumentRadios">
