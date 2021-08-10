@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import Instrument from "./Instrument"
 
 const generateInstruments = (instrumentData) => {
-    // const instrumentComponents = instrumentData.map(instrument => {
-    //     return <Instrument instrument = {instrumentData.audioSamples} playNote = {instrumentData.playNote} />
-    // })
+    const instrumentComponents = instrumentData.map(instrument => {
+        return <Instrument instrument = {instrumentData.audioSamples} playNote = {instrumentData.playNote} />
+    })
     console.log(instrumentData)
 }
 const AllInstruments = ({instrumentData}) => {
@@ -13,6 +13,10 @@ const AllInstruments = ({instrumentData}) => {
     return <div>
         {instrumentList}
     </div>
+}
+
+AllInstruments.propTypes= {
+    instrumentData: PropTypes.array
 }
 
 export default AllInstruments

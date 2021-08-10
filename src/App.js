@@ -11,18 +11,21 @@ import { render } from '@testing-library/react';
 function App() {
   const BASE_URL = 'http://localhost:27017/instruments'
 
-  const [selectedInstrument, setInstrument] = useState([])
+  const [selectedInstrument, setInstrument] = useState("drums")
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
   }
 
+  const [instruments, setInstruments] = useState()
+
   useEffect(() => {
-    axios.get(`${BASE_URL}`)
+    if (!instruments){
+      axios.get(`${BASE_URL}`)
       .then((response) => {
-        render(
-        <AllInstruments  instrument = {response.data} />)}
-      )
+        setInstruments(response.data)
+      })
+    }
   })
 // generate grid for visual display
   return (
@@ -33,7 +36,9 @@ function App() {
 
         <main>
           <Controls />
+          <AllInstruments instrumentData={instruments} />
 
+{/* render AI here */}
         
 {/* instance of instruments passes down selected instrument array samples */}
           <div className="instrumentRadios">
