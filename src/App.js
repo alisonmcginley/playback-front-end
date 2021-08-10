@@ -4,25 +4,25 @@ import axios from 'axios'
 
 import Controls from './components/Controls';
 import Instrument from './components/Instrument';
+import AllInstruments from './components/AllInstruments'
+import { render } from '@testing-library/react';
 
 
 function App() {
-  const [selectedInstrument, setInstrument] = useState('drums')
+  const BASE_URL = 'http://localhost:27017/instruments'
+
+  const [selectedInstrument, setInstrument] = useState([])
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
   }
 
-  const BASE_URL = 'http://localhost:27017/instruments'
   useEffect(() => {
-    axios.get(`${BASE_URL}`, {
-      params: {
-        name: `${selectedInstrument}`
-      }
-    })
+    axios.get(`${BASE_URL}`)
       .then((response) => {
-        <Instrument instrument={selectedInstrument} />
-      })
+        render(
+        <AllInstruments  instrument = {response.data} />)}
+      )
   })
 // generate grid for visual display
   return (
@@ -34,6 +34,8 @@ function App() {
         <main>
           <Controls />
 
+        
+{/* instance of instruments passes down selected instrument array samples */}
           <div className="instrumentRadios">
           <h3 id="instrumentHeader">Choose an Instrument</h3>
             <input name = "instrumentChoice" type="radio" value="drums" id="drums" onChange={updateInstrument}></input>

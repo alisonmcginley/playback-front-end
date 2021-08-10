@@ -4,12 +4,11 @@ import './note.css';
 
 
 const Note = (props) => {
-    return <button instrument = {props.instrument} id = {props.id} className ="note">Note</button>   
+    return <span onKeyDown ={props.playNote} key = {props.id} AUDIO_URI = {props.AUDIO_URI} className ="note">Note</span>   
 };
 
 Note.propTypes = {
-    id: PropTypes.number.isRequired,
-    instrument: PropTypes.string.isRequired
+    AUDIO_URI: PropTypes.string.isRequired
 };
 // write api call based on Note.instrument
 export default Note
