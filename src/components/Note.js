@@ -4,11 +4,14 @@ import './note.css';
 
 
 const Note = (props) => {
-    return <span onKeyDown ={props.playNote} key = {props.id} keyEvent= {props.keyEvent} className ="note">Note</span>   
+
+    return <span onKeyPress={props.keyCallBack(props.keyAssignment)} key = {props.key} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</span>   
 };
 
 Note.propTypes = {
-    AUDIO_URI: PropTypes.string.isRequired
+    keyCallBack: PropTypes.func,
+    keyAssignment: PropTypes.string,
+
 };
 // write api call based on Note.instrument
 export default Note

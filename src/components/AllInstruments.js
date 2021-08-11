@@ -4,7 +4,7 @@ import Instrument from "./Instrument"
 
 
 const generateKeys = (samples) => {
-    const keys = ["q","w","e","r","t","y","u","i","o"]
+    const keys = [81,87,69,82,84,89,85,73,79, 80]
         const keyAssignments = []
 
         for(let i =0; i< samples.length; i++){
@@ -15,11 +15,11 @@ const generateKeys = (samples) => {
     return keyAssignments
 }
 
-const generateInstruments = (instrumentData) => {
+const generateInstruments = (instrumentData, keyCallBack) => {
     
     const instrumentComponents = instrumentData.map(instrument => {
     const keyAssignments = generateKeys(instrument.audioSamples)    
-        return <Instrument keyAssignments = {keyAssignments} />
+        return <Instrument keyAssignments = {keyAssignments} keyCallBack = {keyCallBack}/>
     })
     return (
         <div class="instrumentComponents">
@@ -27,15 +27,16 @@ const generateInstruments = (instrumentData) => {
         </div>
     )
 }
-const AllInstruments = ({instrumentData}) => {
-    const instrumentList = generateInstruments(instrumentData);
+const AllInstruments = ({instrumentData, keyCallBack}) => {
+    const instrumentList = generateInstruments(instrumentData, keyCallBack);
     return <div>
         {instrumentList}
     </div>
 }
 
 AllInstruments.propTypes= {
-    instrumentData: PropTypes.array
+    instrumentData: PropTypes.array,
+    keyCallBack: PropTypes.func
 }
 
 export default AllInstruments
