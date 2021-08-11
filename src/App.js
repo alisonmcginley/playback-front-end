@@ -8,8 +8,6 @@ import AllInstruments from './components/AllInstruments'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const ac = new AudioContext()
-const Soundfont = require('soundfont-player')
-
 
 
 function App() {
@@ -23,7 +21,7 @@ function App() {
   }
 
   const [instruments, setInstruments] = useState([])
-// needs dependency array
+
   useEffect(() => {
       axios.get(`${BASE_URL}`)
       .then((response) => {
@@ -31,14 +29,7 @@ function App() {
       })
   }, [])
 
-  // maybe take in selected instrument and index of sample
-  // const audioPlay = (note) => {
-  //   // const notee = new Audio(Object.values(note))
-  //   note.play()
-  // }
-
-  // takes in an object, note
-  const playNote = (e, note) => {
+  const playNote = (key, note) => {
     note.play();
   }
 
@@ -50,7 +41,7 @@ function App() {
 
         <main>
           <Controls />
-          <AllInstruments instrumentData={instruments} keyCallBack={playNote}/>
+          <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument = {selectedInstrument}/>
 
         
 {/* instance of instruments passes down selected instrument array samples */}

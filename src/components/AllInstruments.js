@@ -4,7 +4,7 @@ import Instrument from "./Instrument"
 
 
 const generateKeys = (samples) => {
-    const keys = [81,87,69,82,84,89,85,73,79, 80]
+    const keys = ["q", "w", "e","r","t","y","u","i","o","p"]
         const keyAssignments = []
 
         for(let i =0; i< samples.length; i++){
