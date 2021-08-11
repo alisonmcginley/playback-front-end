@@ -7,7 +7,7 @@ import Instrument from './components/Instrument';
 import AllInstruments from './components/AllInstruments'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext()
+const ac = new AudioContext()
 const Soundfont = require('soundfont-player')
 
 
@@ -32,27 +32,15 @@ function App() {
   }, [])
 
   // maybe take in selected instrument and index of sample
-  const audioPlay = (note) => {
-    console.log(Object.values(note))
-    const notee = new Audio(Object.values(note))
-    notee.play()
-  }
-
-
-
-
+  // const audioPlay = (note) => {
+  //   // const notee = new Audio(Object.values(note))
+  //   note.play()
+  // }
 
   // takes in an object, note
   const playNote = (e, note) => {
-    console.log(note);
-    audioPlay(note)
-    if(e.key === note.key){
-      console.log('hello')
-     audioPlay(note)
-    }
+    note.play();
   }
-
-
 
   return (
     <div className="App">

@@ -2,14 +2,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './note.css';
-
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const ac = new AudioContext()
 
 const Note = (props) => {
-
+    const noteAudio = new Audio(Object.values(props.keyAssignment))
     const playCallBack = (e) => {
-        props.keyCallBack(e, props.keyAssignment)
+        props.keyCallBack(e, noteAudio)
     }
-    return <button onKeyPress={(e) => playCallBack(e)} key = {props.key} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</button>   
+    return <button onKeyPress={(e) => playCallBack(e)} audio = {noteAudio} key = {props.key} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</button>   
 };
 
 Note.propTypes = {
