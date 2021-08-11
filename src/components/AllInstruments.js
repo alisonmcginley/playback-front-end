@@ -19,10 +19,11 @@ const generateInstruments = (instrumentData, keyCallBack) => {
     
     const instrumentComponents = instrumentData.map(instrument => {
     const keyAssignments = generateKeys(instrument.audioSamples)    
-        return <Instrument keyAssignments = {keyAssignments} keyCallBack = {keyCallBack}/>
+        return <Instrument instrumentName = {instrument.name} keyAssignments = {keyAssignments} keyCallBack = {keyCallBack}/>
     })
     return (
         <div class="instrumentComponents">
+
             {instrumentComponents}
         </div>
     )
@@ -37,6 +38,7 @@ const AllInstruments = ({instrumentData, keyCallBack}) => {
 AllInstruments.propTypes= {
     instrumentData: PropTypes.array,
     keyCallBack: PropTypes.func
+
 }
 
 export default AllInstruments

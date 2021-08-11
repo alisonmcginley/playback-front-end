@@ -17,10 +17,10 @@ const Note = (props) => {
 
     const playCallBack = (e) => {
         if(e.key == keyKey){
-            props.keyCallBack(e, noteAudio)
+            props.keyCallBack(e, noteAudio, props.instrumentName)
         }
     }
-    return <button onKeyPress={(e) => playCallBack(e)} key = {props.key} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</button>   
+    return <button onKeyPress={(e) => playCallBack(e)} key = {props.key} instrumentName = {props.instrumentName} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</button>   
 };
 
 Note.propTypes = {

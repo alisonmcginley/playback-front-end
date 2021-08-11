@@ -29,9 +29,11 @@ function App() {
       })
   }, [])
 
-  const playNote = (key, note) => {
-    note.play();
-  }
+  const playNote = (key, note, name) => {
+    if(name === selectedInstrument){
+      note.play();
+    }
+}
 
   return (
     <div className="App">
@@ -41,8 +43,7 @@ function App() {
 
         <main>
           <Controls />
-          <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument = {selectedInstrument}/>
-
+          <AllInstruments instrumentData={instruments} keyCallBack={playNote}/>
         
 {/* instance of instruments passes down selected instrument array samples */}
           <div className="instrumentRadios">
