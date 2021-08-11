@@ -1,3 +1,4 @@
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import './note.css';
@@ -5,7 +6,10 @@ import './note.css';
 
 const Note = (props) => {
 
-    return <span onKeyPress={props.keyCallBack(props.keyAssignment)} key = {props.key} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</span>   
+    const playCallBack = (e) => {
+        props.keyCallBack(e, props.keyAssignment)
+    }
+    return <button onKeyPress={(e) => playCallBack(e)} key = {props.key} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</button>   
 };
 
 Note.propTypes = {

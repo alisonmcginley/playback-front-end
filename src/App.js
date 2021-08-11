@@ -1,13 +1,19 @@
+import SoundFontPlayer from "soundfont-player"
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios'
-
 import Controls from './components/Controls';
 import Instrument from './components/Instrument';
 import AllInstruments from './components/AllInstruments'
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext()
+const Soundfont = require('soundfont-player')
+
+
 
 function App() {
+
   const BASE_URL = 'http://localhost:27017/instruments'
 
   const [selectedInstrument, setInstrument] = useState("drums")
@@ -25,20 +31,28 @@ function App() {
       })
   }, [])
 
-
-
+  // maybe take in selected instrument and index of sample
   const audioPlay = (note) => {
-    console.log(note)
-    new Audio(note.value).play()
+    console.log(Object.values(note))
+    const notee = new Audio(Object.values(note))
+    notee.play()
   }
+
+
+
+
 
   // takes in an object, note
   const playNote = (e, note) => {
-    console.log(e.keyCode)
+    console.log(note);
+    audioPlay(note)
     if(e.key === note.key){
+      console.log('hello')
      audioPlay(note)
     }
   }
+
+
 
   return (
     <div className="App">
