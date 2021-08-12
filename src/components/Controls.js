@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tempo from './Tempo';
 import Record from './Record';
 import Clear from './Clear';
 import './controls.css';
+
+
 
 const generateControlComponents = () => {
     return (

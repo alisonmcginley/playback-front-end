@@ -3,24 +3,25 @@ import PropTypes from 'prop-types';
 import Instrument from "./Instrument"
 
 
-const generateKeys = (samples) => {
+const generateKeys = (samples, instrumentName) => {
     const keys = ["q", "w", "e","r","t","y","u","i","o","p"]
-        const keyAssignments = []
-
+        const keyAssignments = {}
+        keyAssignments[instrumentName] = []
         for(let i =0; i< samples.length; i++){
             const keyAssignment = {};
             keyAssignment[keys[i]] = samples[i]["AUDIO_URI"];
-            keyAssignments.push(keyAssignment)
+            keyAssignments[instrumentName].push(keyAssignment)
     }
     return keyAssignments
 }
 
-const generateInstruments = (instrumentData, keyCallBack) => {
-    
+const generateInstruments = (instrumentData, keyCallBack, selectedInstrument) => {
     const instrumentComponents = instrumentData.map(instrument => {
-    const keyAssignments = generateKeys(instrument.audioSamples)    
-        return <Instrument instrumentName = {instrument.name} keyAssignments = {keyAssignments} keyCallBack = {keyCallBack}/>
+    const keyAssignments = generateKeys(instrument.audioSamples, instrument.name);
+
+        return <Instrument selectedInstrument = {selectedInstrument} instrumentName = {instrument.name} keyAssignments = {keyAssignments[instrument.name]} keyCallBack = {keyCallBack}/>
     })
+
     return (
         <div class="instrumentComponents">
 
@@ -28,8 +29,9 @@ const generateInstruments = (instrumentData, keyCallBack) => {
         </div>
     )
 }
-const AllInstruments = ({instrumentData, keyCallBack}) => {
-    const instrumentList = generateInstruments(instrumentData, keyCallBack);
+const AllInstruments = ({instrumentData, keyCallBack, selectedInstrument}) => {
+    console.log(instrumentData)
+    const instrumentList = generateInstruments(instrumentData, keyCallBack, selectedInstrument);
     return <div>
         {instrumentList}
     </div>

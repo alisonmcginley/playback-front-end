@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios'
 import Controls from './components/Controls';
+import Tempo from './components/Tempo'
 import Instrument from './components/Instrument';
 import AllInstruments from './components/AllInstruments'
+import PlayButton from './components/playButton'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const ac = new AudioContext()
@@ -13,12 +15,24 @@ const ac = new AudioContext()
 function App() {
 
   const BASE_URL = 'http://localhost:27017/instruments'
+  // what if I edit to only pass down the selected instrument?
+  const [tempo, setTempo] = useState(80)
+  const changeTempo = (e) => {
+    const eValue = e.target.value;
+    setTempo(parseInt(eValue));
+}
+
+  const [isPlaying, setIsPlaying] = useState(false)
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying)
+  }
 
   const [selectedInstrument, setInstrument] = useState("drums")
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
   }
+
 
   const [instruments, setInstruments] = useState([])
 
@@ -30,9 +44,7 @@ function App() {
   }, [])
 
   const playNote = (key, note, name) => {
-    if(name === selectedInstrument){
       note.play();
-    }
 }
 
   return (
@@ -42,8 +54,9 @@ function App() {
         </header>
 
         <main>
-          <Controls />
-          <AllInstruments instrumentData={instruments} keyCallBack={playNote}/>
+          <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
+          <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
+          <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
         
 {/* instance of instruments passes down selected instrument array samples */}
           <div className="instrumentRadios">

@@ -1,25 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Note from './Note';
+import './instrument.css';
 
 
-const setNotes = (keyAssignments, keyCallBack, instrumentName) => {
+
+const setNotes = (selectedInstrument, keyAssignments, keyCallBack, instrumentName) => {
     const noteComponents = keyAssignments.map(keyAssignment => {
     return (
-        <Note instrumentName = {instrumentName} keyAssignment={keyAssignment} key = {keyAssignment._id} keyCallBack = {keyCallBack}/>
+        <Note selectedInstrument = {selectedInstrument} instrumentName = {instrumentName} keyAssignment={keyAssignment} key = {keyAssignment._id} keyCallBack = {keyCallBack}/>
     )
-
 });
     return (
-        <div class="notes">
+        <div class="instrumentGrid">
            {noteComponents} 
         </div>
     )
 
 };
 
-const Instrument = ({ keyAssignments, keyCallBack, instrumentName}) => {
-    const noteList = setNotes(keyAssignments, keyCallBack, instrumentName);
+
+const Instrument = ({ selectedInstrument, keyAssignments, keyCallBack, instrumentName}) => {
+    const noteList = setNotes(selectedInstrument, keyAssignments, keyCallBack, instrumentName);
     return <div>
         {noteList}
     </div>

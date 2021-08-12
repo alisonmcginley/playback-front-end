@@ -1,0 +1,230 @@
+[
+    {
+        "_id": "6112e5a97aefe59f9458d748",
+        "name": "drums",
+        "audioSamples": [
+            {
+                "_id": "61143ffb3244dad037f8ca79",
+                "name": "kick",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/kick.m4a"
+            },
+            {
+                "_id": "6114400c3244dad037f8ca7b",
+                "name": "snare",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/snare.wav"
+            },
+            {
+                "_id": "611440143244dad037f8ca7d",
+                "name": "clap",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/clap.wav"
+            },
+            {
+                "_id": "6114401b3244dad037f8ca7f",
+                "name": "maraca",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/maraca.wav"
+            },
+            {
+                "_id": "611440213244dad037f8ca81",
+                "name": "openHat",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/openHat.wav"
+            },
+            {
+                "_id": "611440283244dad037f8ca83",
+                "name": "lowTom",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/lowTom.wav"
+            },
+            {
+                "_id": "6114402f3244dad037f8ca85",
+                "name": "highTom",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/highTom.wav"
+            },
+            {
+                "_id": "611440363244dad037f8ca87",
+                "name": "cowbell",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/cowBell.wav"
+            },
+            {
+                "_id": "6114403d3244dad037f8ca89",
+                "name": "clave",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/clave.wav"
+            },
+            {
+                "_id": "611440433244dad037f8ca8b",
+                "name": "conga",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/drumSamples/conga.wav"
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "_id": "6112e5af7aefe59f9458d74a",
+        "name": "bass",
+        "audioSamples": [
+            {
+                "_id": "611440693244dad037f8ca8d",
+                "name": "bass0",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass.wav"
+            },
+            {
+                "_id": "611440703244dad037f8ca8f",
+                "name": "bass1",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_1.wav"
+            },
+            {
+                "_id": "611440783244dad037f8ca91",
+                "name": "bass2",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_2.wav"
+            },
+            {
+                "_id": "611440813244dad037f8ca93",
+                "name": "bass3",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_3.wav"
+            },
+            {
+                "_id": "611440893244dad037f8ca95",
+                "name": "bass4",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_4.wav"
+            },
+            {
+                "_id": "6114408f3244dad037f8ca97",
+                "name": "bass5",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_5.wav"
+            },
+            {
+                "_id": "611440973244dad037f8ca99",
+                "name": "bass6",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_6.wav"
+            },
+            {
+                "_id": "6114409d3244dad037f8ca9b",
+                "name": "bass7",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_7.wav"
+            },
+            {
+                "_id": "611440a33244dad037f8ca9d",
+                "name": "bass8",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_8.wav"
+            },
+            {
+                "_id": "611440aa3244dad037f8ca9f",
+                "name": "bass9",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/bassSamples/Minimal+Bass_9.wav"
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "_id": "6112e5b67aefe59f9458d74c",
+        "name": "leadSynth",
+        "audioSamples": [
+            {
+                "_id": "611440db3244dad037f8caa1",
+                "name": "leadSynth0",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly.wav"
+            },
+            {
+                "_id": "611440e13244dad037f8caa3",
+                "name": "leadSynth1",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_1.wav"
+            },
+            {
+                "_id": "611440e83244dad037f8caa5",
+                "name": "leadSynth2",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_2.wav"
+            },
+            {
+                "_id": "611440f23244dad037f8caa7",
+                "name": "leadSynth3",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_3.wav"
+            },
+            {
+                "_id": "611440f73244dad037f8caa9",
+                "name": "leadSynth4",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_4.wav"
+            },
+            {
+                "_id": "611440ff3244dad037f8caab",
+                "name": "leadSynth5",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_5.wav"
+            },
+            {
+                "_id": "611441063244dad037f8caad",
+                "name": "leadSynth6",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_6.wav"
+            },
+            {
+                "_id": "611441103244dad037f8caaf",
+                "name": "leadSynth7",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_7.wav"
+            },
+            {
+                "_id": "611441163244dad037f8cab1",
+                "name": "leadSynth8",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_8.wav"
+            },
+            {
+                "_id": "611441203244dad037f8cab3",
+                "name": "leadSynth9",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/leadSynthSamples/Mellow+Poly_9.wav"
+            }
+        ],
+        "__v": 0
+    },
+    {
+        "_id": "6112e5be7aefe59f9458d74e",
+        "name": "harmony",
+        "audioSamples": [
+            {
+                "_id": "611441493244dad037f8cab5",
+                "name": "harmony0",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony0.wav"
+            },
+            {
+                "_id": "6114414f3244dad037f8cab7",
+                "name": "harmony1",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony1.wav"
+            },
+            {
+                "_id": "611441553244dad037f8cab9",
+                "name": "harmony2",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony2.wav"
+            },
+            {
+                "_id": "6114415b3244dad037f8cabb",
+                "name": "harmony3",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony3.wav"
+            },
+            {
+                "_id": "611441613244dad037f8cabd",
+                "name": "harmony4",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony4.wav"
+            },
+            {
+                "_id": "611441683244dad037f8cabf",
+                "name": "harmony5",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony5.wav"
+            },
+            {
+                "_id": "6114416e3244dad037f8cac1",
+                "name": "harmony6",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony6.wav"
+            },
+            {
+                "_id": "611441763244dad037f8cac3",
+                "name": "harmony7",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony7.wav"
+            },
+            {
+                "_id": "6114417c3244dad037f8cac5",
+                "name": "harmony8",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony8.wav"
+            },
+            {
+                "_id": "611441833244dad037f8cac7",
+                "name": "harmony9",
+                "AUDIO_URI": "https://playbacksamples.s3.us-east-2.amazonaws.com/harmonySamples/harmony9.wav"
+            }
+        ],
+        "__v": 0
+    }
+]
