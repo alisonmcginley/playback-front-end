@@ -8,9 +8,9 @@ const ac = new AudioContext()
 
 const Note = (props) => {
     useEffect(() => {
-        if(props.selectedInstrument == ""){
-        window.addEventListener("keydown", playCallBack);}
-      }, []);
+        window.addEventListener("keydown", playCallBack);
+        return () => {window.removeEventListener("keydown", playCallBack)}}
+      , [props.selectedInstrument]);
     
     const noteAudio = new Audio(Object.values(props.keyAssignment))
     const keyKey = Object.keys(props.keyAssignment)

@@ -1,5 +1,5 @@
 import SoundFontPlayer from "soundfont-player"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import axios from 'axios'
 import Controls from './components/Controls';
@@ -31,6 +31,7 @@ function App() {
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
+    console.log(selectedInstrument)
   }
 
 
@@ -43,9 +44,12 @@ function App() {
       })
   }, [])
 
-  const playNote = (key, note, name) => {
-      note.play();
-}
+  console.log(selectedInstrument)
+  const playNote = useCallback((key, note, name) => {
+    console.log(name, selectedInstrument)
+    if(name == selectedInstrument){
+      note.play();}
+}, [selectedInstrument])
 
   return (
     <div className="App">
