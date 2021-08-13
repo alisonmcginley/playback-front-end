@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Record = () => {
-    return <button className="controls">Record</button>
+    return <button className="controls">Loop</button>
 }
 
 export default Record

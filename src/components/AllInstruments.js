@@ -30,7 +30,6 @@ const generateInstruments = (instrumentData, keyCallBack, selectedInstrument) =>
     )
 }
 const AllInstruments = ({instrumentData, keyCallBack, selectedInstrument}) => {
-    console.log(instrumentData)
     const instrumentList = generateInstruments(instrumentData, keyCallBack, selectedInstrument);
     return <div>
         {instrumentList}

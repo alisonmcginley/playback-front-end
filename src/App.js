@@ -2,11 +2,11 @@ import SoundFontPlayer from "soundfont-player"
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import axios from 'axios'
-import Controls from './components/Controls';
 import Tempo from './components/Tempo'
-import Instrument from './components/Instrument';
 import AllInstruments from './components/AllInstruments'
 import PlayButton from './components/playButton'
+import StopButton from './components/stopButton'
+import RecordButton from './components/recordButton'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const ac = new AudioContext()
@@ -27,15 +27,35 @@ function App() {
     setIsPlaying(!isPlaying)
   }
 
+
+  const [isRecording, setIsRecording] = useState(false)
+  const toggleRecord = () => {
+    setIsRecording(!isRecording)
+  }
+
   const [selectedInstrument, setInstrument] = useState("drums")
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
-    console.log(selectedInstrument)
   }
 
-
   const [instruments, setInstruments] = useState([])
+  const [noteArray, setNoteArray] = useState([])
+  const playArray = [] 
+  const updateArray = (note, time) => {
+    playArray.push({"audio": note, "time": time})
+    setNoteArray(playArray)
+  }
+  console.log(noteArray)
+
+  // const playSounds = (array) => {
+  //   for (let i = 0; i < array.length; i++) {
+  //     (array[i]).start();
+  //   }
+  // };
+  // if(isPlaying){
+  //   playSounds(noteArray)
+  // }
 
   useEffect(() => {
       axios.get(`${BASE_URL}`)
@@ -44,12 +64,11 @@ function App() {
       })
   }, [])
 
-  console.log(selectedInstrument)
   const playNote = useCallback((key, note, name) => {
-    console.log(name, selectedInstrument)
-    if(name == selectedInstrument){
+    if(name === selectedInstrument){
+      updateArray(note, AudioContext.currentTime + 0.1)
       note.play();}
-}, [selectedInstrument])
+}, [selectedInstrument, noteArray])
 
   return (
     <div className="App">
@@ -58,12 +77,7 @@ function App() {
         </header>
 
         <main>
-          <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
-          <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
-          <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
-        
-{/* instance of instruments passes down selected instrument array samples */}
-          <div className="instrumentRadios">
+       < div className="instrumentRadios">
           <h3 id="instrumentHeader">Choose an Instrument</h3>
             <input name = "instrumentChoice" type="radio" value="drums" id="drums" onChange={updateInstrument}></input>
             <label for="drums">Drums</label>            
@@ -74,6 +88,14 @@ function App() {
             <input name = "instrumentChoice" type="radio" value="leadSynth" id="leadSynth" onChange={updateInstrument}></input>
             <label for="leadSynth">Lead</label>
           </div>
+          <RecordButton onClick={toggleRecord} isRecording ={isRecording} />
+          <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
+          <StopButton onClick={togglePlay} isPlaying={isPlaying} />
+          <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
+          <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
+        
+{/* instance of instruments passes down selected instrument array samples */}
+        
         </main>
     </div>
   );

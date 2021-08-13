@@ -7,8 +7,10 @@ const ac = new AudioContext()
 
 
 const Note = (props) => {
+    let noteActive = false
     useEffect(() => {
         window.addEventListener("keydown", playCallBack);
+        // window.addEventListener("keyup", ()=> {noteActive=false})
         return () => {window.removeEventListener("keydown", playCallBack)}}
       , [props.selectedInstrument]);
     
@@ -16,10 +18,13 @@ const Note = (props) => {
     const keyKey = Object.keys(props.keyAssignment)
     const playCallBack = (e) => {
         if(e.key == keyKey){
+            noteActive = true
+            console.log(noteActive)
             props.keyCallBack(e, noteAudio, props.instrumentName)
         }
     }
-    return <button onKeyPress={(e) => playCallBack(e)} key = {props.key} instrumentName = {props.instrumentName} keyAssignment= {props.keyAssignment} className ="note" tabindex="0">Note</button>   
+    return <button onKeyDown={(e) => playCallBack(e)} key = {props.key} instrumentName = {props.instrumentName} 
+    keyAssignment= {props.keyAssignment} className ={`note ${noteActive ? 'active': ''}`} tabindex="0"></button>   
 };
 
 Note.propTypes = {
