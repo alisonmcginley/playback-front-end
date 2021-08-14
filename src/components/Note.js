@@ -19,12 +19,11 @@ const Note = (props) => {
     const playCallBack = (e) => {
         if(e.key == keyKey){
             noteActive = true
-            console.log(noteActive)
-            props.keyCallBack(e, noteAudio, props.instrumentName)
+            props.keyCallBack(e, noteAudio, props.instrumentName, e.timeStamp)
         }
     }
     return <button onKeyDown={(e) => playCallBack(e)} key = {props.key} instrumentName = {props.instrumentName} 
-    keyAssignment= {props.keyAssignment} className ={`note ${noteActive ? 'active': ''}`} tabindex="0"></button>   
+    keyAssignment= {props.keyAssignment} className ={`note ${noteActive ? 'active': ''}`} ></button>   
 };
 
 Note.propTypes = {

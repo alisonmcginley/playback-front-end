@@ -40,22 +40,31 @@ function App() {
   }
 
   const [instruments, setInstruments] = useState([])
-  const [noteArray, setNoteArray] = useState([])
+  const [noteArray, setNoteArray] = useState()
   const playArray = [] 
-  const updateArray = (note, time) => {
-    playArray.push({"audio": note, "time": time})
+  const updateArray = (note) => {
+    playArray.push(note)
     setNoteArray(playArray)
   }
-  console.log(noteArray)
 
-  // const playSounds = (array) => {
-  //   for (let i = 0; i < array.length; i++) {
-  //     (array[i]).start();
-  //   }
-  // };
-  // if(isPlaying){
-  //   playSounds(noteArray)
-  // }
+  let i = 0;
+
+  const timer = ms => new Promise(res => setTimeout(res, ms))
+
+  async function play(i) {
+    i.play()
+    await timer(tempo*16);
+  }
+
+  async function playSounds(array) {
+    for(let i = 0; i < array.length; i++) {
+      await play(array[i])
+    }
+    playSounds(array)
+  }
+  if(isPlaying){
+    playSounds(noteArray)
+  }
 
   useEffect(() => {
       axios.get(`${BASE_URL}`)
@@ -64,9 +73,9 @@ function App() {
       })
   }, [])
 
-  const playNote = useCallback((key, note, name) => {
+  const playNote = useCallback((key, note, name, timeStamp) => {
     if(name === selectedInstrument){
-      updateArray(note, AudioContext.currentTime + 0.1)
+      updateArray(note)
       note.play();}
 }, [selectedInstrument, noteArray])
 
