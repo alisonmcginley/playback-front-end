@@ -17,54 +17,67 @@ function App() {
   const BASE_URL = 'http://localhost:27017/instruments'
   // what if I edit to only pass down the selected instrument?
   const [tempo, setTempo] = useState(80)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isRecording, setIsRecording] = useState(false);
+  const [selectedInstrument, setInstrument] = useState("drums");
+  const [instruments, setInstruments] = useState([]);
+  const [noteArray, setNoteArray] = useState();
+  const [timeArray, setTimeArray] = useState();
+
   const changeTempo = (e) => {
     const eValue = e.target.value;
     setTempo(parseInt(eValue));
 }
 
-  const [isPlaying, setIsPlaying] = useState(false)
   const togglePlay = () => {
     setIsPlaying(!isPlaying)
+    updateTimeArray(Date.now())
   }
 
-
-  const [isRecording, setIsRecording] = useState(false)
   const toggleRecord = () => {
-    setIsRecording(!isRecording)
+    setIsRecording(!isRecording);
   }
 
-  const [selectedInstrument, setInstrument] = useState("drums")
   const updateInstrument = (form) => {
     let currInstrument = form.target.value;
     setInstrument(currInstrument);
   }
 
-  const [instruments, setInstruments] = useState([])
-  const [noteArray, setNoteArray] = useState()
-  const playArray = [] 
-  const updateArray = (note) => {
-    playArray.push(note)
-    setNoteArray(playArray)
+  const playArray = [];
+  const updateArray = (note, timestamp) => {
+    playArray.push(note);
+    updateTimeArray(timestamp)
+    setNoteArray(playArray);
   }
 
-  let i = 0;
+  const timeStampArray = [];
+  const updateTimeArray = (timestamp) => {
+    timeStampArray.push(timestamp);
+    setTimeArray(timeStampArray);
+  }
 
+
+  // let i = 0;
   const timer = ms => new Promise(res => setTimeout(res, ms))
-
-  async function play(i) {
-    i.play()
-    await timer(tempo*16);
+  async function play(note, length) {
+    note.play();
+    await timer(length);
   }
 
-  async function playSounds(array) {
-    for(let i = 0; i < array.length; i++) {
-      await play(array[i])
+  async function playSounds(soundArray, timeArray) {
+    console.log(timeArray)
+    for(let i = 0; i < soundArray.length; i++) {
+      let difference = (timeArray[i+1] - timeArray[i])
+      console.log(difference)
+      await play(soundArray[i], difference)
     }
-    playSounds(array)
+    playSounds(soundArray, timeArray)
   }
-  if(isPlaying){
-    playSounds(noteArray)
+  const loop = () => {
+    console.log('test')
+    playSounds(noteArray, timeArray);
   }
+
 
   useEffect(() => {
       axios.get(`${BASE_URL}`)
@@ -73,11 +86,15 @@ function App() {
       })
   }, [])
 
-  const playNote = useCallback((key, note, name, timeStamp) => {
+  const playNote = useCallback((key, note, name, timestamp) => {
     if(name === selectedInstrument){
-      updateArray(note)
-      note.play();}
+      updateArray(note, timestamp)
+      note.play();
+      console.log(timestamp)
+    }
 }, [selectedInstrument, noteArray])
+
+
 
   return (
     <div className="App">
@@ -97,8 +114,8 @@ function App() {
             <input name = "instrumentChoice" type="radio" value="leadSynth" id="leadSynth" onChange={updateInstrument}></input>
             <label for="leadSynth">Lead</label>
           </div>
-          <RecordButton onClick={toggleRecord} isRecording ={isRecording} />
-          <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
+          <RecordButton onClick={loop} isRecording ={isRecording} />
+          <PlayButton onClick={loop} isPlaying={isPlaying} />
           <StopButton onClick={togglePlay} isPlaying={isPlaying} />
           <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
           <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
