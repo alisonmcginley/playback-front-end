@@ -24,6 +24,7 @@ function App() {
   const [noteArray, setNoteArray] = useState();
   const [timeArray, setTimeArray] = useState();
 
+
   const changeTempo = (e) => {
     const eValue = e.target.value;
     setTempo(parseInt(eValue));
@@ -78,13 +79,13 @@ function App() {
     playSounds(noteArray, timeArray);
   }
 
-
   useEffect(() => {
       axios.get(`${BASE_URL}`)
       .then((response) => {
         setInstruments(response.data)
       })
   }, [])
+
 
   const playNote = useCallback((key, note, name, timestamp) => {
     if(name === selectedInstrument){
