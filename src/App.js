@@ -90,7 +90,7 @@ function App() {
         measureTime -=timeToWait;
         await play(soundArray[i], timeToWait)}
       else (await play(soundArray[i], (measureTime)))
-    } measureTime = 4000
+    } measureTime = (tempo/60)*1000
     playSounds(soundArray, timeArray)
   }
 
