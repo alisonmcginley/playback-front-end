@@ -23,15 +23,16 @@ function App() {
   const [instruments, setInstruments] = useState([]);
   const [noteArray, setNoteArray] = useState();
   const [timeArray, setTimeArray] = useState();
+  const [currentBeat, setBeat] = useState(1)
 
-
+ 
   const changeTempo = (e) => {
     const eValue = e.target.value;
     setTempo(parseInt(eValue));
 }
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying)
+    setIsPlaying(false)
     updateTimeArray(Date.now())
   }
 
@@ -51,31 +52,41 @@ function App() {
     setNoteArray(playArray);
   }
 
+  // front of array should have time of render
+
   const timeStampArray = [];
   const updateTimeArray = (timestamp) => {
     timeStampArray.push(timestamp);
     setTimeArray(timeStampArray);
   }
 
-
-  // let i = 0;
+  let i = 0;
   const timer = ms => new Promise(res => setTimeout(res, ms))
   async function play(note, length) {
     note.play();
     await timer(length);
   }
 
+  async function updateBeat() {
+    await timer(1000);
+    if(currentBeat <= 4){
+    setBeat(+1)};
+    updateBeat()
+  }
+
   async function playSounds(soundArray, timeArray) {
-    console.log(timeArray)
+    let measureTime = 4000;
     for(let i = 0; i < soundArray.length; i++) {
-      let difference = (timeArray[i+1] - timeArray[i])
-      console.log(difference)
-      await play(soundArray[i], difference)
-    }
+      let timeToWait = (timeArray[i+1] - timeArray[i]);
+      if((measureTime - timeToWait) >= 0){
+        measureTime -=timeToWait;
+        await play(soundArray[i], timeToWait)}
+      else (await play(soundArray[i], (measureTime)))
+    } measureTime = 4000
     playSounds(soundArray, timeArray)
   }
+
   const loop = () => {
-    console.log('test')
     playSounds(noteArray, timeArray);
   }
 
@@ -86,17 +97,14 @@ function App() {
       })
   }, [])
 
-
   const playNote = useCallback((key, note, name, timestamp) => {
     if(name === selectedInstrument){
       updateArray(note, timestamp)
       note.play();
-      console.log(timestamp)
     }
 }, [selectedInstrument, noteArray])
 
-
-
+  
   return (
     <div className="App">
         <header id="header">
