@@ -1,4 +1,3 @@
-import SoundFontPlayer from "soundfont-player"
 import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import axios from 'axios'
@@ -10,7 +9,6 @@ import RecordButton from './components/recordButton'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const ac = new AudioContext()
-
 
 function App() {
 
@@ -26,7 +24,6 @@ function App() {
   const [timeArray, setTimeArray] = useState();
   const [currentBeat, setBeat] = useState(1)
 
- 
   const changeTempo = (e) => {
     const eValue = e.target.value;
     setTempo(parseInt(eValue));
@@ -53,8 +50,6 @@ function App() {
     updateTimeArray(timestamp)
     setNoteArray(playArray);
   }
-
-  // front of array should have time of render
 
   const timeStampArray = [];
   const updateTimeArray = (timestamp) => {
@@ -83,14 +78,15 @@ function App() {
   }
 
   async function playSounds(soundArray, timeArray) {
-    let measureTime = (tempo/60)*1000;
+    let measureTime = (60000/tempo)*4;
+    console.log(measureTime)
     for(let i = 0; i < soundArray.length; i++) {
       let timeToWait = (timeArray[i+1] - timeArray[i]);
       if((measureTime - timeToWait) >= 0){
         measureTime -=timeToWait;
         await play(soundArray[i], timeToWait)}
       else (await play(soundArray[i], (measureTime)))
-    } measureTime = (tempo/60)*1000
+    } measureTime = (60000/tempo)*4
     playSounds(soundArray, timeArray)
   }
 
