@@ -21,6 +21,7 @@ function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedInstrument, setInstrument] = useState("drums");
   const [instruments, setInstruments] = useState([]);
+  const [allNoteArrays, setAllNoteArrays] = useState();
   const [noteArray, setNoteArray] = useState();
   const [timeArray, setTimeArray] = useState();
   const [currentBeat, setBeat] = useState(1)
@@ -38,6 +39,7 @@ function App() {
 
   const toggleRecord = () => {
     setIsRecording(!isRecording);
+    console.log(isRecording)
   }
 
   const updateInstrument = (form) => {
@@ -68,14 +70,20 @@ function App() {
   }
 
   async function updateBeat() {
+    while(isRecording){
     await timer(1000);
-    if(currentBeat <= 4){
-    setBeat(+1)};
-    updateBeat()
+    if(currentBeat < 4){
+      setBeat(+1)
+    }
+    else if(currentBeat === 4){
+      setAllNoteArrays(allNoteArrays.push(noteArray));
+      setNoteArray()
+    } 
+    updateBeat();}
   }
 
   async function playSounds(soundArray, timeArray) {
-    let measureTime = 4000;
+    let measureTime = (tempo/60)*1000;
     for(let i = 0; i < soundArray.length; i++) {
       let timeToWait = (timeArray[i+1] - timeArray[i]);
       if((measureTime - timeToWait) >= 0){
@@ -123,7 +131,7 @@ function App() {
             <input name = "instrumentChoice" type="radio" value="leadSynth" id="leadSynth" onChange={updateInstrument}></input>
             <label for="leadSynth">Lead</label>
           </div>
-          <RecordButton onClick={loop} isRecording ={isRecording} />
+          <RecordButton onClick={toggleRecord} isRecording ={isRecording} />
           <PlayButton onClick={loop} isPlaying={isPlaying} />
           <StopButton onClick={togglePlay} isPlaying={isPlaying} />
           <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
