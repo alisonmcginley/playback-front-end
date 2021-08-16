@@ -95,16 +95,23 @@ function App() {
   // }
 
   
-  const quantize = (timeDifference) => {
-    let quantizedNote = 0
+  const quantize = (times) => {
+    let twoMeasures = 480000/tempo
     let sixteenthNote = 15000/tempo
-    console.log(sixteenthNote)
-    console.log(timeDifference)
-    const toSixteenth = timeDifference % (sixteenthNote);
-    if(toSixteenth > sixteenthNote/2){
-      quantizedNote = timeDifference + toSixteenth
-    }else {quantizedNote = timeDifference - toSixteenth}
-    return quantizedNote
+    let quantizedNote = 0
+    let quantizedArray =[]
+    for(let i=0; i< times.length-1;i++){
+      let timeDifference = Math.round(times[i+1] - times[i]);
+      let toSixteenth = timeDifference % sixteenthNote;
+      if(toSixteenth > sixteenthNote/2){
+          quantizedNote = timeDifference - toSixteenth
+        }else {quantizedNote = timeDifference + toSixteenth}
+      quantizedArray.push(quantizedNote)
+    }
+    const sum = quantizedArray.reduce((result,number) => result+number);
+    quantizedArray.push(twoMeasures-sum)
+    console.log(quantizedArray)
+    return quantizedArray
   }
 
   // const updateMeasureTime = (quantizedNote) => {
@@ -113,14 +120,15 @@ function App() {
   // }
 
   async function playSounds(soundArray, timeArray) {
-    let measureTime = 480000/tempo
+    let measureTime = 480000/tempo;
+    let timesToWait = quantize(timeArray)
     for(let i = 0; i < soundArray.length; i++) {
-      let timeToWait = quantize(Math.round(timeArray[i+1] - timeArray[i]));
-      if((measureTime - timeToWait) >= 0){
-        measureTime -= timeToWait
+      let timeToWait = timesToWait[i];
+      console.log(timeToWait)
+      // if((measureTime - timeToWait) >= 0){
+      //   measureTime -= timeToWait
         await play(soundArray[i], timeToWait)}
-      else (await play(soundArray[i], (measureTime)))
-    } 
+      // else (await play(soundArray[i], (measureTime)))
     measureTime = 480000/tempo
     console.log(measureTime)
     // how can i make this always listen for a soundarray update?
