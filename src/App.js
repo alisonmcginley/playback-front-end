@@ -25,6 +25,8 @@ function App() {
   const [timeArray, setTimeArray] = useState();
   const [currentBeat, setBeat] = useState(1)
 
+  
+
   const changeTempo = (e) => {
     const eValue = e.target.value;
     setTempo(parseInt(eValue));
@@ -92,28 +94,36 @@ function App() {
   //   updateBeat();
   // }
 
-  // async function addNoteArray() {
-  //   setAllNoteArrays(allNoteArrays.push(noteArray));
-  //   setAllTimeArrays(allTimeArrays.push(timeArray));
-  //   console.log(allTimeArrays, allNoteArrays);
-  //   setTimeArray();
-  //   setNoteArray();
+  
+  const quantize = (timeDifference) => {
+    let quantizedNote = 0
+    let sixteenthNote = 15000/tempo
+    console.log(sixteenthNote)
+    console.log(timeDifference)
+    const toSixteenth = timeDifference % (sixteenthNote);
+    if(toSixteenth > sixteenthNote/2){
+      quantizedNote = timeDifference + toSixteenth
+    }else {quantizedNote = timeDifference - toSixteenth}
+    return quantizedNote
+  }
+
+  // const updateMeasureTime = (quantizedNote) => {
+  //     let timeLeft = measureTime - quantizedNote
+  //     return timeLeft
   // }
 
   async function playSounds(soundArray, timeArray) {
-    // updateBeat();
-    let measureTime = 240000/tempo;
-    // const sixteenthNote = measureTime / 4;
-    // make up difference between sixteenth note and timeToWait in order to quantize
+    let measureTime = 480000/tempo
     for(let i = 0; i < soundArray.length; i++) {
-      let timeToWait = (timeArray[i+1] - timeArray[i]);
-      console.log(timeToWait)
+      let timeToWait = quantize(Math.round(timeArray[i+1] - timeArray[i]));
       if((measureTime - timeToWait) >= 0){
-        measureTime -=timeToWait;
+        measureTime -= timeToWait
         await play(soundArray[i], timeToWait)}
       else (await play(soundArray[i], (measureTime)))
     } 
-    measureTime = 240000/tempo;
+    measureTime = 480000/tempo
+    console.log(measureTime)
+    // how can i make this always listen for a soundarray update?
     playSounds(soundArray, timeArray);
   }
 
