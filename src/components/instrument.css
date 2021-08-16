@@ -4,5 +4,6 @@
     margin: 0 auto;
     display:grid;
     grid-template: repeat(4, 1fr) / repeat(5, 1fr);
-    background-color:blueviolet;
+    background-image: url("https://images.pexels.com/photos/110854/pexels-photo-110854.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
+    background-position: fill;
 }

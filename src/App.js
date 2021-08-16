@@ -51,7 +51,6 @@ function App() {
     updateTimeArray(timestamp)
     setNoteArray((noteArray) => [...noteArray, note]);
   }
-  console.log(noteArray)
 
   const updateTimeArray = (timestamp) => {
     setTimeArray((timeArray) => [...timeArray, timestamp])
@@ -78,21 +77,15 @@ function App() {
     return testArray
   }
 
-  async function metronome() {
-    let currBeat = 1
-    console.log(currentBeat)
-    while(currBeat < 4){
-      await timer(1000)
-      currBeat += 1
-      setBeat(currBeat)
-    }
-    setBeat(1)
-  }
-
   const quantize = (times) => {
     let twoMeasures = 480000/tempo
     let sixteenthNote = 15000/tempo
-    // calculate quarter notes
+    let quarterNote = 60000/tempo
+    // also need time from quarter note
+    // if distance > quarternote, insert quarter note after last distance
+    // if distance< quarterNote
+    // [750, 750, 750, 750]
+    // insert a beep into audio array at index of "quarter notes"
     let quantizedNote = 0
     let quantizedArray =[]
     for(let i=0; i< times.length-1;i++){
@@ -101,16 +94,14 @@ function App() {
       if(toSixteenth > sixteenthNote/2){
           quantizedNote = timeDifference - toSixteenth
         }else {quantizedNote = timeDifference + toSixteenth}
-      quantizedArray.push(quantizedNote)
+        quantizedArray.push(quantizedNote)
     }
     const sum = quantizedArray.reduce((result,number) => result+number);
     quantizedArray.push(twoMeasures-sum)
-    console.log(quantizedArray)
     return quantizedArray
   }
 
   async function playSounds(soundArray, timeArray) {
-    console.log(timeArray)
     let timesToWait = quantize(timeArray)
     for(let i = 0; i < soundArray.length; i++) {
       let timeToWait = timesToWait[i];
@@ -169,7 +160,6 @@ function App() {
           <RecordButton onClick={toggleRecord} isRecording ={isRecording} />
           <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
           <StopButton onClick={togglePlay} isPlaying={isPlaying} />
-          <Metronome  onClick={metronome} />
           <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
           <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
         
