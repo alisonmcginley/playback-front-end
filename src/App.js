@@ -6,6 +6,7 @@ import AllInstruments from './components/AllInstruments'
 import PlayButton from './components/playButton'
 import StopButton from './components/stopButton'
 import RecordButton from './components/recordButton'
+import Metronome from './components/metronome'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const ac = new AudioContext()
@@ -19,10 +20,10 @@ function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedInstrument, setInstrument] = useState("drums");
   const [instruments, setInstruments] = useState([]);
-  const [allNoteArrays, setAllNoteArrays] = useState([]);
+  const [allNoteArrays, setAllNoteArrays] = useState();
   const [allTimeArrays, setAllTimeArrays] = useState([]);
-  const [noteArray, setNoteArray] = useState();
-  const [timeArray, setTimeArray] = useState();
+  const [noteArray, setNoteArray] = useState([]);
+  const [timeArray, setTimeArray] = useState([]);
   const [currentBeat, setBeat] = useState(1)
 
   
@@ -33,8 +34,7 @@ function App() {
 }
 
   const togglePlay = () => {
-    setIsPlaying(false)
-    updateTimeArray(Date.now())
+    setIsPlaying(!isPlaying);
   }
 
   const toggleRecord = () => {
@@ -47,17 +47,14 @@ function App() {
     setInstrument(currInstrument);
   }
 
-  const playArray = [];
   const updateArray = (note, timestamp) => {
-    playArray.push(note);
     updateTimeArray(timestamp)
-    setNoteArray(playArray);
+    setNoteArray((noteArray) => [...noteArray, note]);
   }
+  console.log(noteArray)
 
-  const timeStampArray = [];
   const updateTimeArray = (timestamp) => {
-    timeStampArray.push(timestamp);
-    setTimeArray(timeStampArray);
+    setTimeArray((timeArray) => [...timeArray, timestamp])
   }
 
   let i = 0;
@@ -73,31 +70,29 @@ function App() {
     "harmony":[[],[]],
     "bass":[[],[]]
   }
+
   const updateTestArray = (note, timestamp) => {
-    console.log(testArray[selectedInstrument])
     testArray[selectedInstrument][0].push(note)
     testArray[selectedInstrument][1].push(timestamp);
     console.log(testArray)
+    return testArray
   }
 
+  async function metronome() {
+    let currBeat = 1
+    console.log(currentBeat)
+    while(currBeat < 4){
+      await timer(1000)
+      currBeat += 1
+      setBeat(currBeat)
+    }
+    setBeat(1)
+  }
 
-
-  // async function updateBeat() {
-  //   while(currentBeat < 4){
-  //     await timer(1000)
-  //     setBeat(currentBeat+=1)
-  //     console.log(currentBeat);
-  //   }
-  //   if(currentBeat === 4){
-  //     addNoteArray();
-  //   } 
-  //   updateBeat();
-  // }
-
-  
   const quantize = (times) => {
     let twoMeasures = 480000/tempo
     let sixteenthNote = 15000/tempo
+    // calculate quarter notes
     let quantizedNote = 0
     let quantizedArray =[]
     for(let i=0; i< times.length-1;i++){
@@ -114,26 +109,15 @@ function App() {
     return quantizedArray
   }
 
-  // const updateMeasureTime = (quantizedNote) => {
-  //     let timeLeft = measureTime - quantizedNote
-  //     return timeLeft
-  // }
-
   async function playSounds(soundArray, timeArray) {
-    let measureTime = 480000/tempo;
+    console.log(timeArray)
     let timesToWait = quantize(timeArray)
     for(let i = 0; i < soundArray.length; i++) {
       let timeToWait = timesToWait[i];
-      console.log(timeToWait)
-      // if((measureTime - timeToWait) >= 0){
-      //   measureTime -= timeToWait
         await play(soundArray[i], timeToWait)}
-      // else (await play(soundArray[i], (measureTime)))
-    measureTime = 480000/tempo
-    console.log(measureTime)
+      playSounds(soundArray, timeArray);
     // how can i make this always listen for a soundarray update?
-    playSounds(soundArray, timeArray);
-  }
+    }
 
   // const loop = () => {
   //   playSounds(testArray["drums"][0], testArray["drums"][1])    
@@ -142,8 +126,11 @@ function App() {
   //   playSounds(testArray["bass"][0], testArray["bass"][1]);
   // }
   const loop = () => {
-    playSounds(noteArray, timeArray)
+    if(isPlaying){
+      playSounds(noteArray, timeArray)
+    } 
   }
+  loop()
 
   useEffect(() => {
       axios.get(`${BASE_URL}`)
@@ -152,12 +139,13 @@ function App() {
       })
   }, [])
 
-  const playNote = useCallback((key, note, name, timestamp) => {
+  const playNote = (key, note, name, timestamp) => {
     if(name === selectedInstrument){
       updateArray(note, timestamp)
       note.play();
-    }
-}, [selectedInstrument, noteArray])
+    } 
+    // if diff key, trigger update
+}
 
   
   return (
@@ -179,8 +167,9 @@ function App() {
             <label for="leadSynth">Lead</label>
           </div>
           <RecordButton onClick={toggleRecord} isRecording ={isRecording} />
-          <PlayButton onClick={loop} isPlaying={isPlaying} />
+          <PlayButton onClick={togglePlay} isPlaying={isPlaying} />
           <StopButton onClick={togglePlay} isPlaying={isPlaying} />
+          <Metronome  onClick={metronome} />
           <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
           <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
         
