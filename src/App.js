@@ -19,7 +19,8 @@ function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedInstrument, setInstrument] = useState("drums");
   const [instruments, setInstruments] = useState([]);
-  const [allNoteArrays, setAllNoteArrays] = useState();
+  const [allNoteArrays, setAllNoteArrays] = useState([]);
+  const [allTimeArrays, setAllTimeArrays] = useState([]);
   const [noteArray, setNoteArray] = useState();
   const [timeArray, setTimeArray] = useState();
   const [currentBeat, setBeat] = useState(1)
@@ -64,34 +65,66 @@ function App() {
     await timer(length);
   }
 
-  async function updateBeat() {
-    while(isRecording){
-    await timer(1000);
-    if(currentBeat < 4){
-      setBeat(+1)
-    }
-    else if(currentBeat === 4){
-      setAllNoteArrays(allNoteArrays.push(noteArray));
-      setNoteArray()
-    } 
-    updateBeat();}
+  const testArray = {
+    "drums": [[],[]],
+    "leadSynth":[[],[]],
+    "harmony":[[],[]],
+    "bass":[[],[]]
+  }
+  const updateTestArray = (note, timestamp) => {
+    console.log(testArray[selectedInstrument])
+    testArray[selectedInstrument][0].push(note)
+    testArray[selectedInstrument][1].push(timestamp);
+    console.log(testArray)
   }
 
+
+
+  // async function updateBeat() {
+  //   while(currentBeat < 4){
+  //     await timer(1000)
+  //     setBeat(currentBeat+=1)
+  //     console.log(currentBeat);
+  //   }
+  //   if(currentBeat === 4){
+  //     addNoteArray();
+  //   } 
+  //   updateBeat();
+  // }
+
+  // async function addNoteArray() {
+  //   setAllNoteArrays(allNoteArrays.push(noteArray));
+  //   setAllTimeArrays(allTimeArrays.push(timeArray));
+  //   console.log(allTimeArrays, allNoteArrays);
+  //   setTimeArray();
+  //   setNoteArray();
+  // }
+
   async function playSounds(soundArray, timeArray) {
-    let measureTime = (60000/tempo)*4;
-    console.log(measureTime)
+    // updateBeat();
+    let measureTime = 240000/tempo;
+    // const sixteenthNote = measureTime / 4;
+    // make up difference between sixteenth note and timeToWait in order to quantize
     for(let i = 0; i < soundArray.length; i++) {
       let timeToWait = (timeArray[i+1] - timeArray[i]);
+      console.log(timeToWait)
       if((measureTime - timeToWait) >= 0){
         measureTime -=timeToWait;
         await play(soundArray[i], timeToWait)}
       else (await play(soundArray[i], (measureTime)))
-    } measureTime = (60000/tempo)*4
-    playSounds(soundArray, timeArray)
+    } 
+    measureTime = 240000/tempo;
+    playSounds(soundArray, timeArray);
   }
 
+  // const loop = () => {
+  //   playSounds(testArray["drums"][0], testArray["drums"][1])    
+  //   playSounds(testArray["harmony"][0], testArray["harmony"][1])    
+  //   playSounds(testArray["leadSynth"][0], testArray["leadSynth"][1])    
+  //   playSounds(testArray["bass"][0], testArray["bass"][1]);
+  // }
   const loop = () => {
-    playSounds(noteArray, timeArray);
+    playSounds(noteArray, timeArray)
   }
 
   useEffect(() => {
