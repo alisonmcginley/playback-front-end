@@ -6,7 +6,7 @@ import AllInstruments from './components/AllInstruments'
 import PlayButton from './components/playButton'
 import StopButton from './components/stopButton'
 import RecordButton from './components/recordButton'
-import Metronome from './components/metronome'
+const Scheduler = require('./components/scheduler')
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const ac = new AudioContext()
@@ -20,11 +20,21 @@ function App() {
   const [isRecording, setIsRecording] = useState(false);
   const [selectedInstrument, setInstrument] = useState("drums");
   const [instruments, setInstruments] = useState([]);
-  const [allNoteArrays, setAllNoteArrays] = useState();
-  const [allTimeArrays, setAllTimeArrays] = useState([]);
+  const [allNoteArrays, setAllNoteArrays] = useState({
+    "drums": [],
+    "leadSynth":[],
+    "harmony":[],
+    "bass":[]
+  });
+  const [allTimeArrays, setAllTimeArrays] = useState({
+    "drums": [],
+    "leadSynth":[],
+    "harmony":[],
+    "bass":[]
+  });
   const [noteArray, setNoteArray] = useState([]);
   const [timeArray, setTimeArray] = useState([]);
-  const [currentBeat, setBeat] = useState(1)
+  // const [currentBeat, setBeat] = useState(1)
 
   
 
@@ -63,29 +73,23 @@ function App() {
     await timer(length);
   }
 
-  const testArray = {
-    "drums": [[],[]],
-    "leadSynth":[[],[]],
-    "harmony":[[],[]],
-    "bass":[[],[]]
-  }
+  const updateAllNoteArrays = (note, timestamp) => {
+    setAllNoteArrays((allNoteArrays) => 
+    ({...allNoteArrays, [selectedInstrument]:[...allNoteArrays[selectedInstrument], note]})
+    )
 
-  const updateTestArray = (note, timestamp) => {
-    testArray[selectedInstrument][0].push(note)
-    testArray[selectedInstrument][1].push(timestamp);
-    console.log(testArray)
-    return testArray
-  }
+    updateAllTimeArrays(timestamp)
+
+}
+  const updateAllTimeArrays = (timestamp) => {
+    setAllTimeArrays((allTimeArrays) =>
+    ({...allTimeArrays, [selectedInstrument]:[...allTimeArrays[selectedInstrument], timestamp]}))
+    }
+  console.log(allTimeArrays)
 
   const quantize = (times) => {
     let twoMeasures = 480000/tempo
     let sixteenthNote = 15000/tempo
-    let quarterNote = 60000/tempo
-    // also need time from quarter note
-    // if distance > quarternote, insert quarter note after last distance
-    // if distance< quarterNote
-    // [750, 750, 750, 750]
-    // insert a beep into audio array at index of "quarter notes"
     let quantizedNote = 0
     let quantizedArray =[]
     for(let i=0; i< times.length-1;i++){
@@ -100,6 +104,11 @@ function App() {
     quantizedArray.push(twoMeasures-sum)
     return quantizedArray
   }
+  const quantizeAll = (allTimeArrays) => {
+  for(let array in allTimeArrays){
+    let quantizedArray = quantize(allTimeArrays[array])
+    console.log(quantizedArray)}
+  }
 
   async function playSounds(soundArray, timeArray) {
     let timesToWait = quantize(timeArray)
@@ -107,21 +116,13 @@ function App() {
       let timeToWait = timesToWait[i];
         await play(soundArray[i], timeToWait)}
       playSounds(soundArray, timeArray);
-    // how can i make this always listen for a soundarray update?
-    }
 
-  // const loop = () => {
-  //   playSounds(testArray["drums"][0], testArray["drums"][1])    
-  //   playSounds(testArray["harmony"][0], testArray["harmony"][1])    
-  //   playSounds(testArray["leadSynth"][0], testArray["leadSynth"][1])    
-  //   playSounds(testArray["bass"][0], testArray["bass"][1]);
-  // }
-  const loop = () => {
-    if(isPlaying){
-      playSounds(noteArray, timeArray)
-    } 
-  }
-  loop()
+    }
+  useEffect(() => {
+      if(isPlaying){
+        playSounds(noteArray, timeArray)
+    }
+}, [isPlaying])
 
   useEffect(() => {
       axios.get(`${BASE_URL}`)
@@ -132,10 +133,9 @@ function App() {
 
   const playNote = (key, note, name, timestamp) => {
     if(name === selectedInstrument){
-      updateArray(note, timestamp)
+      updateAllNoteArrays(note, timestamp)
       note.play();
     } 
-    // if diff key, trigger update
 }
 
   

@@ -10,7 +10,7 @@ const Note = (props) => {
     let noteActive = false
     useEffect(() => {
         window.addEventListener("keydown", playCallBack);
-        // window.addEventListener("keyup", ()=> {noteActive=false})
+        window.addEventListener("keyup", ()=> {noteActive=false})
         return () => {window.removeEventListener("keydown", playCallBack)}}
       , [props.selectedInstrument]);
     
