@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const PlayButton = (props) => {
     return(
-        <button isPlaying = {props.isPlaying} onClick={props.onClick} >Play </button>
+        <button isplaying = {props.isplaying} onClick={props.onClick} >Play </button>
     )
 }
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const StopButton = (props) => {
     return(
-        <button isPlaying = {props.isPlaying} onClick={props.onClick} >Stop</button>
+        <button isplaying = {props.isplaying} onClick={props.onClick} >Stop</button>
     )
 }
 

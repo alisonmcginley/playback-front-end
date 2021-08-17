@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const RecordButton = (props) => {
     return(
-        <button isRecording = {props.isRecording} onClick={props.onClick} >Record</button>
+        <button isrecording = {props.isrecording} onClick={props.onClick} >Record</button>
     )
 }
 
