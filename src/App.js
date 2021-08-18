@@ -14,7 +14,7 @@ function App() {
   const [tempo, setTempo] = useState(80)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isRecording, setIsRecording] = useState(false);
-  const [selectedInstrument, setInstrument] = useState("drums");
+  const [selectedInstrument, setInstrument] = useState();
   const [instruments, setInstruments] = useState([]);
   const [allNoteArrays, setAllNoteArrays] = useState({
     "drums": [],
@@ -114,13 +114,22 @@ async function playSounds(allNoteArrays, allTimeArrays) {
     if(name === selectedInstrument){
       updateAllNoteArrays(note, timestamp)
       note.play();
+      console.log('play called')
     } 
 }
 
   return (
     <div className="App">
         <header id="header">
-          <h1>Playback</h1>
+          <div class="p">P</div>
+          <div class="l">l</div>
+          <div class="a">a</div>
+          <div class="y">y</div>
+          <div class="b">b</div>
+          <div class="a">a</div>
+          <div class="c">c</div>
+          <div class="k">k</div>
+
         </header>
 
         <main>
@@ -135,10 +144,12 @@ async function playSounds(allNoteArrays, allTimeArrays) {
             <input name = "instrumentChoice" type="radio" value="leadSynth" id="leadSynth" onChange={updateInstrument}></input>
             <label for="leadSynth">Lead</label>
           </div>
+          <div className="controls">
+          <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
           <PlayButton onClick={togglePlay} isplaying={isPlaying ? 1: 0} />
           <StopButton onClick={togglePlay} isplaying={isPlaying ? 1: 0} />
           <ClearButton onClick={clearNotes} />
-          <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
+          </div>
           <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
         
         </main>

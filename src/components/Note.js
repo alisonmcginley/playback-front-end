@@ -15,6 +15,7 @@ const Note = (props) => {
       , [props.selectedInstrument]);
     
     const noteAudio = new Audio(Object.values(props.keyAssignment))
+    console.log('audio created')
     const keyKey = Object.keys(props.keyAssignment)
     const playCallBack = (e) => {
         if(e.key == keyKey){

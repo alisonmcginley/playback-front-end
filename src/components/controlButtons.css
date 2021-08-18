@@ -1,11 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 .controlButton {
+    font-family: 'Press Start 2P', cursive;
     background:transparent;
     border: none;
-    color: white;
+    color: cyan;
+    text-shadow: 0 3px green, 0 5px orange, 0 6px greenyellow;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    font-size: 1.5em;
+    font-size: 1.25em;
+    transition: font-size .5s;
+}
 
+.controlButton:hover {
+    font-size:2.2em;
+}
+
+.controlButton:active{
+    color: orange;
+    text-shadow: 0 3px green, 0 5px orange, 0 6px greenyellow;
 }

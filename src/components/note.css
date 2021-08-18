@@ -7,8 +7,14 @@
     background: transparent;
     border: none;
     font-size:0;
+    transition: background-color 3s;
 }
-.note.active {
+.noteActive {
+    background-color: #54BAE2;
+    border: green;
+  }
+
+  .note:active {
     background-color: #54BAE2;
     border: green;
   }
