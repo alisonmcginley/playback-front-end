@@ -1,4 +1,3 @@
-![Screen Shot 2021-08-18 at 10 02 54 AM](https://user-images.githubusercontent.com/22807951/129932235-ee2cd252-5ae7-47da-b7dd-ea63493a8630.png)
 
 #Playback Front End
 Playback is a React application that allows transforms user inputs into music, looping through notes from four instruments. This app is for all, regardless of previous music experience.
@@ -18,3 +17,4 @@ Alison McGinley
 - Though the functions are written, the app isn't currently listening when the user "clear"s or "stop"s play
 - Deployment pending
 
+![Screen Shot 2021-08-18 at 10 02 54 AM](https://user-images.githubusercontent.com/22807951/129932235-ee2cd252-5ae7-47da-b7dd-ea63493a8630.png)
