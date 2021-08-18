@@ -3,7 +3,7 @@ import "./controlButtons.css"
 
 const PlayButton = (props) => {
     return(
-        <button isplaying = {props.isplaying} onClick={props.onClick} className="controlButton">Play </button>
+        <button isplaying = {props.isplaying} onClick={props.onClick} className="controlButton" id="playButton">Play </button>
     )
 }
 

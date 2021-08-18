@@ -5,6 +5,7 @@ import Instrument from "./Instrument"
 
 const generateKeys = (samples, instrumentName) => {
     const keys = ["q", "w", "e","r","t","y","u","i","o","p"]
+    console.log('keys')
         const keyAssignments = {}
         keyAssignments[instrumentName] = []
         for(let i =0; i< samples.length; i++){
@@ -14,6 +15,7 @@ const generateKeys = (samples, instrumentName) => {
     }
     return keyAssignments
 }
+
 
 const generateInstruments = (instrumentData, keyCallBack, selectedInstrument) => {
     const instrumentComponents = instrumentData.map(instrument => {
@@ -30,8 +32,10 @@ const generateInstruments = (instrumentData, keyCallBack, selectedInstrument) =>
     )
 }
 const AllInstruments = ({instrumentData, keyCallBack, selectedInstrument}) => {
+
     const instrumentList = generateInstruments(instrumentData, keyCallBack, selectedInstrument);
     return <div>
+        
         {instrumentList}
     </div>
 }
