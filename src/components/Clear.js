@@ -1,12 +1,8 @@
 import React from 'react';
 
-// const clearBoard = () => {
-//     pass
-// }
-const Clear = () => {
+const ClearButton = (props) => {
     return (
-        <button className="controls">Clear</button>
+        <button onClick={props.onClick} className="controls">Clear</button>
     )
 }
-
-export default Clear
+export default ClearButton

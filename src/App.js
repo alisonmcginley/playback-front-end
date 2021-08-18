@@ -1,21 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 import Tempo from './components/Tempo';
 import AllInstruments from './components/AllInstruments';
 import PlayButton from './components/playButton';
 import StopButton from './components/stopButton';
-import RecordButton from './components/recordButton';
+import ClearButton from './components/Clear';
 const Scheduler = require('./components/scheduler');
-console.log(Scheduler)
-
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const ac = new AudioContext()
 
 function App() {
 
   const BASE_URL = 'http://localhost:27017/instruments'
-  // what if I edit to only pass down the selected instrument?
   const [tempo, setTempo] = useState(80)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isRecording, setIsRecording] = useState(false);
@@ -33,7 +28,7 @@ function App() {
     "harmony":[],
     "bass":[]
   });
-  const [mergedArray, setMergedArrays] = useState({})
+
   let sixteenthNote = 15000/tempo
   let twoMeasures = 480000/tempo
 
@@ -56,34 +51,38 @@ function App() {
     setInstrument(currInstrument);
   }
 
-  let i = 0;
-  const timer = ms => new Promise(res => setTimeout(res, ms))
-  async function play(note, length) {
-    console.log(note)
-    note.play();
-    await timer(length);
+  const clearNotes = () => {
+    setAllNoteArrays({})
+    setAllTimeArrays({})
   }
-
+ 
   const updateAllNoteArrays = (note, timestamp) => {
     setAllNoteArrays((allNoteArrays) => 
     ({...allNoteArrays, [selectedInstrument]:[...allNoteArrays[selectedInstrument], note]})
     )
-
     updateAllTimeArrays(timestamp)
-
 }
-
 
   const updateAllTimeArrays = (timestamp) => {
     setAllTimeArrays((allTimeArrays) => 
     ({...allTimeArrays, [selectedInstrument]:[...allTimeArrays[selectedInstrument], timestamp]})
     )
     }
-  
-  
 
+  // async helper promise, sets await on a ms timer
+  const timer = ms => new Promise(res => setTimeout(res, ms))
+
+  // plays audio and waits for ms provided
+  async function play(note, length) {
+    console.log(note)
+    note.play();
+    await timer(length);
+  }
+
+// schedules notes then plays them, using the async play function
 async function playSounds(allNoteArrays, allTimeArrays) {
     let schedule = Scheduler.scheduleNotes(allNoteArrays, allTimeArrays, twoMeasures, sixteenthNote)
+    console.log(schedule)
     for(let i =0; i < twoMeasures; i+=sixteenthNote){
       if(schedule[i].length > 0){
         for(let note in schedule[i]){
@@ -95,12 +94,14 @@ async function playSounds(allNoteArrays, allTimeArrays) {
     playSounds(allNoteArrays, allTimeArrays)
   }
 
+  // if playing == true, loop will start
   useEffect(() => {
       if(isPlaying == 1){
       playSounds(allNoteArrays, allTimeArrays)
     }
 }, [isPlaying])
 
+// initial API call
   useEffect(() => {
       axios.get(`${BASE_URL}`)
       .then((response) => {
@@ -108,15 +109,14 @@ async function playSounds(allNoteArrays, allTimeArrays) {
       })
   }, [])
 
+  // accepts note from note.js, playing if it matches the selected instrument and updates note array
   const playNote = (key, note, name, timestamp) => {
     if(name === selectedInstrument){
-      console.log(note)
       updateAllNoteArrays(note, timestamp)
       note.play();
     } 
 }
 
-  
   return (
     <div className="App">
         <header id="header">
@@ -135,13 +135,11 @@ async function playSounds(allNoteArrays, allTimeArrays) {
             <input name = "instrumentChoice" type="radio" value="leadSynth" id="leadSynth" onChange={updateInstrument}></input>
             <label for="leadSynth">Lead</label>
           </div>
-          <RecordButton onClick={toggleRecord} isrecording ={isRecording ? 1 : 0} />
           <PlayButton onClick={togglePlay} isplaying={isPlaying ? 1: 0} />
           <StopButton onClick={togglePlay} isplaying={isPlaying ? 1: 0} />
+          <ClearButton onClick={clearNotes} />
           <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
           <AllInstruments instrumentData={instruments} keyCallBack={playNote} selectedInstrument={selectedInstrument}/>
-        
-{/* instance of instruments passes down selected instrument array samples */}
         
         </main>
     </div>
