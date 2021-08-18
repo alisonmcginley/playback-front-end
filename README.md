@@ -11,6 +11,8 @@ Alison McGinley
 - Each selection loads ten instrument sounds to QWERTYUIOP keys that can be played independently, or together
 - "Play" returns the notes that the user has played so far
 - While playing, the user can continue to add to the loop
+- User can set their own tempo, which trickles down into all rhythmic functionality
+- No rhythm? No problem! An exciting quantize function snaps all sounds to a grid of 16th notes. 
 
 ## Current Bugs
 - Re-renders components with each new selection and play, resulting in a very slow interface
