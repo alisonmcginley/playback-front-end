@@ -11,14 +11,17 @@ body {
 
 header {
   text-align: left;
+  font-size: 4em;
 }
 
-.instrumentRadios {
-  font-size: .5em;
-}
 
 #instrumentHeader {
   font-size: 2em;
+}
+
+.instrumentRadios {
+  font-style: italic;
+  font-size: 1em;
 }
 
 

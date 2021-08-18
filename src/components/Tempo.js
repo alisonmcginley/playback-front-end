@@ -1,4 +1,5 @@
 import React from 'react';
+import "./tempo.css"
 
 const Tempo = (props) => {
     return ( <div>
