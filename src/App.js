@@ -6,6 +6,7 @@ import AllInstruments from './components/AllInstruments';
 import PlayButton from './components/playButton';
 import StopButton from './components/stopButton';
 import ClearButton from './components/Clear';
+import RecordButton from './components/recordButton';
 const Scheduler = require('./components/scheduler');
 
 function App() {
@@ -74,7 +75,6 @@ function App() {
 
   // plays audio and waits for ms provided
   async function play(note, length) {
-    console.log(note)
     note.play();
     await timer(length);
   }
@@ -82,7 +82,6 @@ function App() {
 // schedules notes then plays them, using the async play function
 async function playSounds(allNoteArrays, allTimeArrays) {
     let schedule = Scheduler.scheduleNotes(allNoteArrays, allTimeArrays, twoMeasures, sixteenthNote)
-    console.log(schedule)
     for(let i =0; i < twoMeasures; i+=sixteenthNote){
       if(schedule[i].length > 0){
         for(let note in schedule[i]){
@@ -96,7 +95,7 @@ async function playSounds(allNoteArrays, allTimeArrays) {
 
   // if playing == true, loop will start
   useEffect(() => {
-      if(isPlaying == 1){
+      if(isPlaying == true){
       playSounds(allNoteArrays, allTimeArrays)
     }
 }, [isPlaying])
@@ -112,9 +111,11 @@ async function playSounds(allNoteArrays, allTimeArrays) {
   // accepts note from note.js, playing if it matches the selected instrument and updates note array
   const playNote = (key, note, name, timestamp) => {
     if(name === selectedInstrument){
-      updateAllNoteArrays(note, timestamp)
       note.play();
-      console.log('play called')
+      if(isRecording == true){
+        console.log('called')
+        updateAllNoteArrays(note, timestamp);
+      }
     } 
 }
 
@@ -129,7 +130,6 @@ async function playSounds(allNoteArrays, allTimeArrays) {
           <div class="a">a</div>
           <div class="c">c</div>
           <div class="k">k</div>
-
         </header>
 
         <main>
@@ -146,6 +146,7 @@ async function playSounds(allNoteArrays, allTimeArrays) {
           </div>
           <div className="controls">
           <Tempo value={tempo} onTempoChange={(e) => changeTempo(e)} />
+          <RecordButton isrecording={isRecording} onClick={toggleRecord} />
           <PlayButton onClick={togglePlay} isplaying={isPlaying ? 1: 0} />
           <StopButton onClick={togglePlay} isplaying={isPlaying ? 1: 0} />
           <ClearButton onClick={clearNotes} />

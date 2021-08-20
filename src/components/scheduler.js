@@ -9,23 +9,22 @@ export const buildMap = (sixteenthNote) => {
 
 // snaps incoming audio to a sixteenth note grid, based on the distance between notes played
 export const quantize = (times, twoMeasures, sixteenthNote) => {
-    let quantizedNote = 0
-    const quantizedArray =[]
+    let quantizedNote = 0;
+    const quantizedArray =[];
     for(let i=0; i< times.length-1;i++){
         let timeDifference = Math.round(times[i+1] - times[0]);
         let toSixteenth = timeDifference % sixteenthNote;
         if(toSixteenth > sixteenthNote/2){
-            quantizedNote = timeDifference - toSixteenth
+            quantizedNote = timeDifference - toSixteenth;
         }else {quantizedNote = timeDifference - toSixteenth
         if(quantizedNote > 5812.5){
             quantizedNote = 0
-        }
-        quantizedArray.push(quantizedNote)
-        console.log(times, timeDifference, quantizedNote)
+        };
+        quantizedArray.push(quantizedNote);
     }if(quantizedArray.length> 0){
     const sum = quantizedArray.reduce((result,number) => result+number);
-    quantizedArray.push(twoMeasures-sum)
-    console.log(quantizedArray)
+    quantizedArray.push(twoMeasures-sum);
+    console.log(quantizedArray);
     return quantizedArray
     }
 }
@@ -38,7 +37,6 @@ export const quantizeAll = (allTimeArrays, twoMeasures, sixteenthNote) => {
             let quantizedArray = quantize(allTimeArrays[array], twoMeasures, sixteenthNote)
             quantizedObject[array] = quantizedArray
         }
-    console.log(quantizedObject)
     return quantizedObject
     }
     
